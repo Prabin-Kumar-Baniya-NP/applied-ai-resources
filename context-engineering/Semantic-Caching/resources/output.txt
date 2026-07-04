@@ -1,0 +1,74 @@
+(.venv) personal@linux:~/Desktop/applied-ai-resources$ python context-engineering/Semantic-Caching/resources/redis_semantic_cache.py 
+================================================================================
+E-COMMERCE SEMANTIC CACHE + AUTO CATEGORY CLASSIFIER
+Redis: redis://localhost:6379   Embeddings: text-embedding-3-small   LLM: gpt-4o-mini
+================================================================================
+Loaded 20 labelled examples into Redis index 'intent_examples'  (faq=7, product=7, order=6)
+
+Processing incoming questions (category is DETECTED, not given):
+
+[01] ❌ MISS   | category=faq (conf 86%) user=user_42
+     Q: What is your return policy?
+     classified via nearest example: "What is your return policy?" [faq] sim=1.00
+     cache: scope='ecom:faq'  no match within 0.2  → called LLM & stored
+     time=2847ms   A: Our return policy allows returns within 30 days of purchase, provided the item is in origi
+
+[02] ✅ HIT    | category=faq (conf 70%) user=user_42
+     Q: Can you explain your return policy?
+     classified via nearest example: "What is your return policy?" [faq] sim=0.91
+     cache: scope='ecom:faq'  dist=0.0869 ≤ 0.2  → matched "What is your return policy?"
+     time=515ms   A: Our return policy allows returns within 30 days of purchase, provided the item is in origi
+
+[03] ❌ MISS   | category=faq (conf 85%) user=user_42
+     Q: Do you offer free shipping?
+     classified via nearest example: "Do you offer free shipping?" [faq] sim=1.00
+     cache: scope='ecom:faq'  no match within 0.2  → called LLM & stored
+     time=2560ms   A: Yes, we offer free shipping on orders over a certain amount. Please check our shipping pol
+
+[04] ✅ HIT    | category=faq (conf 83%) user=user_42
+     Q: Do you have free shipping available?
+     classified via nearest example: "Do you offer free shipping?" [faq] sim=0.86
+     cache: scope='ecom:faq'  dist=0.1402 ≤ 0.2  → matched "Do you offer free shipping?"
+     time=500ms   A: Yes, we offer free shipping on orders over a certain amount. Please check our shipping pol
+
+[05] ❌ MISS   | category=product (conf 100%) user=user_99
+     Q: Is the Aura wireless headphone waterproof?
+     classified via nearest example: "Is the Aura wireless headphone waterproof?" [product] sim=1.00
+     cache: scope='ecom:product'  no match within 0.15  → called LLM & stored
+     time=2764ms   A: The Aura wireless headphones are not waterproof; they are typically water-resistant but sh
+
+[06] ✅ HIT    | category=product (conf 100%) user=user_99
+     Q: Can the Aura wireless headphones get wet?
+     classified via nearest example: "Is the Aura wireless headphone waterproof?" [product] sim=0.91
+     cache: scope='ecom:product'  dist=0.0871 ≤ 0.15  → matched "Is the Aura wireless headphone waterproof?"
+     time=947ms   A: The Aura wireless headphones are not waterproof; they are typically water-resistant but sh
+
+[07] ❌ MISS   | category=order (conf 100%) user=user_42
+     Q: Where is my order?
+     classified via nearest example: "Where is my order?" [order] sim=1.00
+     cache: scope='ecom:order:user_42'  no match within 0.1  → called LLM & stored
+     time=2747ms   A: Please provide your order number so I can help you track its status.
+
+[08] ✅ HIT    | category=order (conf 100%) user=user_42
+     Q: Where's my order?
+     classified via nearest example: "Where is my order?" [order] sim=0.95
+     cache: scope='ecom:order:user_42'  dist=0.0500 ≤ 0.1  → matched "Where is my order?"
+     time=719ms   A: Please provide your order number so I can help you track its status.
+
+[09] ❌ MISS   | category=order (conf 100%) user=user_7
+     Q: Where is my order?
+     classified via nearest example: "Where is my order?" [order] sim=1.00
+     cache: scope='ecom:order:user_7'  no match within 0.1  → called LLM & stored
+     time=2064ms   A: Please provide your order number, and I can help you track its status.
+
+[10] ⏭  BYPASS | category=unknown (conf 19%) user=user_42
+     Q: What time does the football match start today?
+     classified via nearest example: "When will my order arrive?" [order] sim=0.19
+     cache: bypassed (off-topic/ambiguous) → called LLM, nothing stored
+     time=1228ms   A: I'm sorry, but I don't have access to real-time schedules or events. Please check a sports
+
+================================================================================
+SUMMARY: 4/10 served from cache → 4 LLM calls avoided (40% hit rate)
+Tip: edit TRAINING_EXAMPLES (classifier) or DEMO_QUERIES, or tune the thresholds, and rerun.
+================================================================================
+(.venv) personal@linux:~/Desktop/applied-ai-resources$ 
