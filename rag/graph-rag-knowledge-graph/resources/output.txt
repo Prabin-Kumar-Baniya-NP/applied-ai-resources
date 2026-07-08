@@ -1,0 +1,23 @@
+(.venv) personal@linux:~/Desktop/applied-ai-resources/rag/graph-rag-knowledge-graph/resources/novamart-supply-graph$ python 03_ask.py "whhich products will be affected if we lose HanoiAssembly?"
+
+══════════════════════════════════════════════════════════════════════
+  Q: whhich products will be affected if we lose HanoiAssembly?
+══════════════════════════════════════════════════════════════════════
+  -> Translating question → Cypher ...
+
+  Generated Cypher (audit trail):
+MATCH (s:Supplier {name:'HanoiAssembly'})-[:SUPPLIED_BY]-(c:Component)-[:MADE_OF]-(p:Product) RETURN DISTINCT p.name AS product
+  -> Running the query against Neo4j ...
+
+  Rows returned (5):
+    {'product': 'TrekBand Smartwatch'}
+    {'product': 'LumaX Monitor'}
+    {'product': 'NovaHome Thermostat'}
+    {'product': 'PulseBuds Earbuds'}
+    {'product': 'AuroraBook Laptop'}
+  -> Generating natural-language answer ...
+
+  Answer: If we lose HanoiAssembly, the following products will be affected: TrekBand Smartwatch, LumaX Monitor, NovaHome Thermostat, PulseBuds Earbuds, and AuroraBook Laptop.
+
+  -> Done.
+(.venv) personal@linux:~/Desktop/applied-ai-resources/rag/graph-rag-knowledge-graph/resources/novamart-supply-graph$ 

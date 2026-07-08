@@ -1,0 +1,35 @@
+# Neo4j Community Edition for the NovaMart Supply-Chain Graph RAG project.
+#
+#   Start:   docker compose up -d
+#   Logs:    docker compose logs -f
+#   Stop:    docker compose down            (keeps data)
+#   Wipe:    docker compose down -v         (deletes the graph volume too)
+#
+# Browser UI:  http://localhost:7474   (login neo4j / novamartgraph)
+# Bolt (apps): bolt://localhost:7687
+
+services:
+  neo4j:
+    image: neo4j:5.26-community        # Community Edition = free & open source
+    container_name: novamart-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"                    # HTTP  -> Neo4j Browser (humans)
+      - "7687:7687"                    # Bolt  -> Python driver (apps)
+    environment:
+      # username / password for the database. Setting NEO4J_AUTH skips the
+      # forced first-login password change. Must be >= 8 chars.
+      NEO4J_AUTH: neo4j/novamartgraph
+      # allow the APOC plugin (handy utilities); harmless if unused.
+      NEO4J_PLUGINS: '["apoc"]'
+    volumes:
+      - neo4j_data:/data               # graph persists across restarts
+      - ./data:/import                 # CSVs available to LOAD CSV as file:///
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  neo4j_data:

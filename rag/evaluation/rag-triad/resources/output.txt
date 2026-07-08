@@ -1,0 +1,150 @@
+(.venv) personal@linux:~/Desktop/applied-ai-resources/rag/evaluation/rag-triad/resources$ python rag-triad.py 
+
+══════════════════════════════════════════════════════════════════════
+  STEP 1 — Database setup (Postgres + pgvector)
+══════════════════════════════════════════════════════════════════════
+  -> pgvector extension ready; `documents` table created fresh.
+
+══════════════════════════════════════════════════════════════════════
+  STEP 2 — Ingest CSV -> embeddings -> pgvector
+══════════════════════════════════════════════════════════════════════
+  -> Loaded 20 rows from sample.csv.
+  -> Embedding 20 chunks with text-embedding-3-small ...
+  -> Stored 20 embeddings in Postgres.
+
+══════════════════════════════════════════════════════════════════════
+  QUERY 1:  How long does standard shipping take, and is it ever free?
+══════════════════════════════════════════════════════════════════════
+  -> Retrieving top context from pgvector ...
+
+  Retrieved context (3 chunks):
+    [1] Standard shipping takes 3 to 5 business days and costs $4.99. Shipping is free on all orders over $50.
+    [2] Express shipping delivers within 1 to 2 business days for a flat fee of $14.99.
+    [3] Items can be returned within 30 days of delivery for a full refund. Return shipping is free using the prepaid label in your account.
+  -> Generating answer with gpt-4o-mini ...
+
+  Answer:
+     Standard shipping takes 3 to 5 business days and is free on all orders over $50.
+  -> Judging with the RAG Triad ...
+
+  RAG Triad scores:
+    Context Relevance    1.00  PASS
+    All retrieved context passages are relevant to the question about standard shipping.
+    Groundedness         1.00  PASS
+    Every claim in the answer is directly supported by the context provided.
+    Answer Relevance     1.00  PASS
+    The answer directly and completely addresses both parts of the question.
+
+══════════════════════════════════════════════════════════════════════
+  QUERY 2:  What is your return policy, and are there any restocking fees?
+══════════════════════════════════════════════════════════════════════
+  -> Retrieving top context from pgvector ...
+
+  Retrieved context (3 chunks):
+    [1] Items can be returned within 30 days of delivery for a full refund. Return shipping is free using the prepaid label in your account.
+    [2] Opened electronics are subject to a 15% restocking fee unless the item is defective or damaged on arrival.
+    [3] All electronics come with a 1-year manufacturer warranty. An extended 2-year protection plan is available for $19 at checkout.
+  -> Generating answer with gpt-4o-mini ...
+
+  Answer:
+     Items can be returned within 30 days of delivery for a full refund, and return
+     shipping is free using the prepaid label in your account. Opened electronics are
+     subject to a 15% restocking fee unless the item is defective or damaged on arrival.
+  -> Judging with the RAG Triad ...
+
+  RAG Triad scores:
+    Context Relevance    1.00  PASS
+    All retrieved context passages are directly relevant to the return policy and restocking fees.
+    Groundedness         1.00  PASS
+    Every claim in the answer is fully supported by the context provided.
+    Answer Relevance     1.00  PASS
+    The answer directly and completely addresses the question asked.
+
+══════════════════════════════════════════════════════════════════════
+  QUERY 3:  What do I get with the NovaMart Plus membership?
+══════════════════════════════════════════════════════════════════════
+  -> Retrieving top context from pgvector ...
+
+  Retrieved context (3 chunks):
+    [1] NovaMart Plus membership costs $49 per year and includes free express shipping, 5% cashback on every order, and early access to sales.
+    [2] Customer support is available 24 hours a day, 7 days a week via live chat on our website and by email at support@novamart.com.
+    [3] The NovaHome smart thermostat can save up to 20% on home energy bills and is priced at $129.
+  -> Generating answer with gpt-4o-mini ...
+
+  Answer:
+     With the NovaMart Plus membership, you get free express shipping, 5% cashback on
+     every order, and early access to sales. The membership costs $49 per year.
+  -> Judging with the RAG Triad ...
+
+  RAG Triad scores:
+    Context Relevance    1.00  PASS
+    All retrieved context passages are relevant to the NovaMart Plus membership.
+    Groundedness         1.00  PASS
+    Every claim in the answer about the membership benefits is supported by the context.
+    Answer Relevance     1.00  PASS
+    The answer directly and completely addresses what the question asked.
+
+══════════════════════════════════════════════════════════════════════
+  QUERY 4:  Which payment methods can I use, and do you offer any pay-later options?
+══════════════════════════════════════════════════════════════════════
+  -> Retrieving top context from pgvector ...
+
+  Retrieved context (3 chunks):
+    [1] Buy-now-pay-later financing is available through Klarna on orders above $100, split into four interest-free payments.
+    [2] We accept Visa, Mastercard, American Express, PayPal, and Apple Pay for all purchases.
+    [3] We never sell customer data to third parties, and all payment information is encrypted in transit using TLS 1.3.
+  -> Generating answer with gpt-4o-mini ...
+
+  Answer:
+     You can use Visa, Mastercard, American Express, PayPal, and Apple Pay for purchases.
+     Yes, buy-now-pay-later financing is available through Klarna on orders above $100,
+     split into four interest-free payments.
+  -> Judging with the RAG Triad ...
+
+  RAG Triad scores:
+    Context Relevance    1.00  PASS
+    All retrieved context passages are directly relevant to the question about payment methods and pay-later options.
+    Groundedness         1.00  PASS
+    Every claim in the answer is supported by the context provided.
+    Answer Relevance     1.00  PASS
+    The answer directly and completely addresses both parts of the question.
+
+══════════════════════════════════════════════════════════════════════
+  QUERY 5:  Tell me about the AuroraBook laptop's specs and price.
+══════════════════════════════════════════════════════════════════════
+  -> Retrieving top context from pgvector ...
+
+  Retrieved context (3 chunks):
+    [1] The AuroraBook laptop features a 14-inch display, 16GB of RAM, and a 512GB SSD, and is priced at $899.
+    [2] The PulseBuds wireless earbuds deliver up to 8 hours of battery life on a single charge and cost $59.
+    [3] All electronics come with a 1-year manufacturer warranty. An extended 2-year protection plan is available for $19 at checkout.
+  -> Generating answer with gpt-4o-mini ...
+
+  Answer:
+     The AuroraBook laptop features a 14-inch display, 16GB of RAM, and a 512GB SSD. It is
+     priced at $899.
+  -> Judging with the RAG Triad ...
+
+  RAG Triad scores:
+    Context Relevance    1.00  PASS
+    All retrieved context passages are relevant to the AuroraBook laptop's specifications and price.
+    Groundedness         1.00  PASS
+    Every claim in the answer about the laptop's specs and price is directly supported by the context.
+    Answer Relevance     1.00  PASS
+    The answer directly and completely addresses the question about the AuroraBook laptop's specs and price.
+
+══════════════════════════════════════════════════════════════════════
+  SUMMARY — RAG Triad across all queries
+══════════════════════════════════════════════════════════════════════
+  #    Context Rel.   Groundedness   Answer Rel.    Query
+  ------------------------------------------------------------------------------------------------
+  1    1.00           1.00           1.00           How long does standard shipping take, and is ...
+  2    1.00           1.00           1.00           What is your return policy, and are there any...
+  3    1.00           1.00           1.00           What do I get with the NovaMart Plus membership?
+  4    1.00           1.00           1.00           Which payment methods can I use, and do you o...
+  5    1.00           1.00           1.00           Tell me about the AuroraBook laptop's specs a...
+  ------------------------------------------------------------------------------------------------
+  AVG  1.00           1.00           1.00           (average across the test set)
+
+  -> Done. Connection closed.
+(.venv) personal@linux:~/Desktop/applied-ai-resources/rag/evaluation/rag-triad/resources$ 

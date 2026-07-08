@@ -10,3 +10,6 @@ openai>=1.0            # OpenAI client: used for embeddings AND answer generatio
 redisvl>=0.3           # Redis Vector Library: SemanticCache + vector search
 python-dotenv>=1.0     # loads the .env file so scripts pick up your keys/URLs
 numpy>=1.24            # pulled in by redisvl; listed explicitly for clarity
+psycopg2-binary>=2.9   # Postgres driver (RAG Triad example)
+pgvector>=0.2          # pgvector <-> Python adapter (register_vector)
+neo4j>=5.0             # Neo4j Bolt driver (Graph RAG: novamart-supply-graph)

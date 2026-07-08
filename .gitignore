@@ -1,6 +1,6 @@
 # --- Secrets / environment ---
-.env                 # your real keys live here — NEVER commit this
-!.env.example        # ...but DO keep the template in git
+.env                 
+!.env.example
 
 # --- Virtual environments ---
 .venv/
