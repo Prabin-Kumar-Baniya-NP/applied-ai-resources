@@ -71,8 +71,9 @@ flowchart LR
 
 ## 3. How to use this curriculum
 
-- **Each tier = one folder** (e.g. `01-rag-fundamentals/`), each with its own `introduction.md`
-  deep-dive and runnable `resources/`.
+- **Each tier = one folder** (e.g. [`rag-foundations/`](rag-foundations/Introduction.md)), each
+  with its own `Introduction.md` deep-dive (and, where applicable, runnable `resources/`).
+  Every tier section below links to its deep dive.
 - **Learn evaluation early, not last.** Tier 7 is listed at the end for logical grouping, but
   you should learn the *metrics* right after Tier 3 — you can't tell if any later upgrade
   actually helped unless you can measure it.
@@ -84,6 +85,8 @@ flowchart LR
 ## Tier 0 — Foundations
 *Beginner. What RAG is and when to use it.*
 
+> 📁 **Deep dive:** [rag-foundations/Introduction.md](rag-foundations/Introduction.md)
+
 - What RAG is and the problems it solves (stale knowledge, hallucination, private data).
 - The 7-stage naive pipeline (above) — the backbone of everything.
 - **RAG vs. alternatives**: fine-tuning vs. RAG vs. long-context windows vs. prompt-stuffing — and when each one wins.
@@ -92,6 +95,8 @@ flowchart LR
 
 ## Tier 1 — Indexing & Chunking
 *The data layer. Garbage in = garbage out — most quality problems are born here.*
+
+> 📁 **Deep dive:** [indexing-and-chunking/Introduction.md](indexing-and-chunking/Introduction.md)
 
 - Document loading & parsing (PDF, HTML, tables — the messy real-world part).
 - **Chunking strategies**: fixed-size, recursive, sentence-window, semantic chunking, parent-document / hierarchical.
@@ -103,6 +108,8 @@ flowchart LR
 ## Tier 2 — Embeddings & Vector Stores
 *The retrieval substrate. How meaning becomes searchable.*
 
+> 📁 **Deep dive:** [embeddings-and-vector-stores/Introduction.md](embeddings-and-vector-stores/Introduction.md)
+
 - **Embeddings**: dense vs. sparse, choosing a model, dimensionality, multilingual.
 - **Vector databases**: FAISS, Chroma, Qdrant, Weaviate, pgvector, Milvus.
 - **ANN indexing**: HNSW, IVF — how approximate nearest-neighbor search actually works.
@@ -112,6 +119,8 @@ flowchart LR
 
 ## Tier 3 — Retrieval Strategies
 *The core skill. This is where "good" RAG separates from "naive."*
+
+> 📁 **Deep dive:** [retrieval-strategies/Introduction.md](retrieval-strategies/Introduction.md)
 
 - **Sparse / keyword search**: BM25.
 - **Dense / semantic search**: vector similarity.
@@ -124,6 +133,8 @@ flowchart LR
 ## Tier 4 — Query Transformation
 *Fixing the question. The user's raw query is rarely the best search query.*
 
+> 📁 **Deep dive:** [query-transformation/Introduction.md](query-transformation/Introduction.md)
+
 - **Query expansion / rewriting.**
 - **HyDE** (Hypothetical Document Embeddings) — embed a fake ideal answer, search with that.
 - **Multi-query** (several query variants) and **sub-question decomposition** (split complex questions).
@@ -133,6 +144,8 @@ flowchart LR
 
 ## Tier 5 — Advanced RAG Patterns ⭐
 *Named architectures. Once basics work, these are what you'll see everywhere.*
+
+> 📁 **Deep dive:** [advanced-rag-patterns/Introduction.md](advanced-rag-patterns/Introduction.md)
 
 - **Self-RAG** — the model decides *when* to retrieve and critiques its own output.
 - **Corrective RAG (CRAG)** — grades retrieved docs; falls back to web search if they're weak.
@@ -147,6 +160,8 @@ flowchart LR
 ## Tier 6 — Graph RAG & Knowledge Graphs ⭐
 *A genuinely different paradigm from vector RAG — give it its own dedicated study block.*
 
+> 📁 **Deep dive:** [graph-rag-knowledge-graph/Introduction.md](graph-rag-knowledge-graph/Introduction.md)
+
 - **Why graphs**: vector-only RAG fails on **multi-hop reasoning** and global "connect-the-dots" questions; graphs encode *relationships between entities*, not just similarity.
 - **Knowledge graph basics**: entities, relations, triples (subject–predicate–object); building a KG from unstructured text via LLM extraction.
 - **Microsoft GraphRAG** — the reference implementation: entity extraction → relationship mapping → **community detection (Leiden algorithm)** → hierarchical community summaries → **local vs. global search**.
@@ -157,6 +172,11 @@ flowchart LR
 
 ## Tier 7 — Evaluation & Production ⭐
 *Where you become an engineer. You can't improve what you can't measure.*
+
+> 📁 **Deep dives:** [evaluation/rag-triad/Introduction.md](evaluation/rag-triad/Introduction.md) (7a) ·
+> [evaluation/retrieval-metrics/Introduction.md](evaluation/retrieval-metrics/Introduction.md) (7b) ·
+> [evaluation/eval-tooling/Introduction.md](evaluation/eval-tooling/Introduction.md) (7c) ·
+> 7d (production & optimization) — *not yet written*
 
 **7a. The RAG Triad** (LLM-as-judge quality metrics):
 - **Context Relevance** — did retrieval fetch docs that actually matter? *(diagnoses the retriever)*
